@@ -1,0 +1,28 @@
+.product-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 500px; 
+  margin: 0 auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: contain; 
+}
+
+.carousel .slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  margin: 0 auto; /* Asegúrate de que el carrusel esté centrado */
+  max-width: 100%; /* Ajusta el ancho máximo */
+}
+
+.carousel-item img {
+  max-width: 100%; /* Asegúrate de que las imágenes se ajusten correctamente */
+  height: 400px; /* Ajusta la altura */
+  object-fit: cover; /* Mantén la proporción de la imagen */
+}
