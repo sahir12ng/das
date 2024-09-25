@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavBar = ({ isAuthenticated, onLogout }) => {
   const [userRole, setUserRole] = useState(null); 
+  const navigate = useNavigate(); // Mueve el hook aquí
 
   useEffect(() => {
     const role = localStorage.getItem('userRole');
@@ -27,6 +28,12 @@ const NavBar = ({ isAuthenticated, onLogout }) => {
     };
   }, []);
 
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/'); 
+    window.location.reload(); 
+  };
+
   return (
     <nav className="navbar">
       <Link to="/" className="nav-link">Home</Link>
@@ -36,7 +43,7 @@ const NavBar = ({ isAuthenticated, onLogout }) => {
       {!isAuthenticated ? (
         <Link to="/login" className="nav-link">Iniciar Sesión</Link>
       ) : (
-        <button onClick={onLogout} className="nav-link">Cerrar Sesión</button>
+        <button onClick={handleLogoutClick} className="nav-link">Cerrar Sesión</button>
       )}
     </nav>
   );

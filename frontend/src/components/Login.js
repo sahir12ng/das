@@ -61,6 +61,9 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       <p className="register-prompt">
         ¿No tienes una cuenta? <a href="/register">Regístrate aquí</a>
       </p>
+      <p className="forgot-password">
+        <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+      </p>
     </div>
   );
 };

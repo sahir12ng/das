@@ -12,13 +12,13 @@ const Home = () => {
 
   return (
     <div>
-      <h2>Promociones Especiales</h2>
+      <h2>ANUNCIOS</h2>
       <Carousel
   className="carousel-container"
   showThumbs={false}
   infiniteLoop={true}
   autoPlay={true}
-  interval={18000}
+  interval={45000}
   showStatus={false}
   dynamicHeight={false}
   stopOnHover={false}
