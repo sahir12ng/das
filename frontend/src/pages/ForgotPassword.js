@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/contra.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -30,18 +29,17 @@ const ForgotPassword = () => {
   return (
     <div className="forgot-password-page">
       <h2>Recuperar Contraseña</h2>
-      <form onSubmit={handleForgotPassword} className="forgot-password-form">
+      <form onSubmit={handleForgotPassword}>
         <input
           type="email"
           placeholder="Ingresa tu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="email-input"
         />
-        <button type="submit" className="recovery-button">Enviar Enlace de Recuperación</button>
+        <button type="submit">Enviar Enlace de Recuperación</button>
       </form>
-      {message && <p className="message">{message}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
 };

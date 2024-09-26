@@ -687,7 +687,7 @@ body {
 
 .cart-and-filter {
   display: flex;
-  gap: 20px; /* Espacio entre el botón y el filtro */
+  gap: 20px; 
   align-items: center;
 }
 
@@ -724,3 +724,54 @@ body {
   cursor: pointer;
 }
 
+.reset-password-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; 
+  background-color: #f9f9f9;
+}
+
+.reset-password-page h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.reset-password-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+  width: 300px; 
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.reset-password-page input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.reset-password-page button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #ff7043;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.reset-password-page button:hover {
+  background-color: #ff5722;
+}
+
+.reset-password-page p {
+  margin-top: 15px;
+  color: #555;
+}
