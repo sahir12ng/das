@@ -7,23 +7,28 @@ const nodemailer = require('nodemailer');
 // Ruta de registro de usuario
 router.post('/register', async (req, res) => {
   const { username, email, password, role } = req.body;
-
   try {
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      return res.status(400).json({ message: 'El nombre de usuario o correo electrónico ya existe' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword, role: role || 'user' });
-    await newUser.save();
-
-    res.status(201).json({ message: 'Usuario registrado con éxito' });
-  } catch (error) {
-    console.error('Error al registrar usuario:', error);
-    res.status(500).json({ message: 'Error al registrar usuario' });
+  const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+  if (existingUser) {
+    return res.status(400).json({ message: 'El nombre de usuario o correo electrónico ya existe' });
   }
+  const contrasenaencriptada = await bcrypt.hash(password, 10);
+  const data = new User({
+    username,
+    password: contrasenaencriptada,
+    email,
+   role: role || 'user'
+  });
+  const result = await data.save();
+  res.status(200).json({message:"Registro exítoso"});
+} catch (error) {
+  console.error('Error al registrar usuario:', error);
+  res.status(500).json({ message: 'Error interno del servidor' });
+}
 });
+
+
+
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -58,7 +63,6 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 });
-
 // Ruta para recuperación de contraseña
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
