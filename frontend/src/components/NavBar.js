@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const NavBar = ({ isAuthenticated, onLogout }) => {
   const [userRole, setUserRole] = useState(null); 
-  const navigate = useNavigate(); // Mueve el hook aquí
+  const navigate = useNavigate();
 
   useEffect(() => {
     const role = localStorage.getItem('userRole');

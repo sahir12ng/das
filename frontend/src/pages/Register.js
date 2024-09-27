@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate(); // Inicializa el hook para la navegación
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -26,6 +28,7 @@ const Register = () => {
 
       if (response.ok) {
         alert('Registro exitoso');
+        navigate('/login'); 
       } else {
         alert(data.message || 'Error al registrarse');
       }

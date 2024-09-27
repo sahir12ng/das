@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-const AddProductForm = () => {
+const AddProductForm = ({ onAdd }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [category, setCategory] = useState(''); 
+  const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]); 
+    setImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -18,7 +18,7 @@ const AddProductForm = () => {
     formData.append('name', name);
     formData.append('description', description);
     formData.append('price', price);
-    formData.append('category', category); 
+    formData.append('category', category);
     formData.append('image', image);
 
     try {
@@ -28,6 +28,8 @@ const AddProductForm = () => {
       });
 
       if (response.ok) {
+        const newProduct = await response.json(); 
+        onAdd(newProduct); 
         alert('Producto agregado con éxito');
       } else {
         alert('Error al agregar el producto');
@@ -50,7 +52,7 @@ const AddProductForm = () => {
           required
         />
         <input
-          type='text'
+          type="text"
           placeholder="Descripción del Producto"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

@@ -11,7 +11,7 @@ const Contact = () => {
           <FaFacebook className="social-icon" />
           Facebook
         </a>
-        <a href="https://www.instagram.com/nandosalas48/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/nandoCo9/" target="_blank" rel="noopener noreferrer">
           <FaInstagram className="social-icon" />
           Instagram
         </a>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/forgot.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-page">
+    <div className="forgot-password-container">
       <h2>Recuperar Contraseña</h2>
       <form onSubmit={handleForgotPassword}>
         <input

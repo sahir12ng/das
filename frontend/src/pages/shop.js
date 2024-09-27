@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AddProduct from '../components/AddProduct'; 
+import AddProduct from '../components/AddProduct';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [userRole, setUserRole] = useState('');
-  const [showAddProduct, setShowAddProduct] = useState(false); 
+  const [showAddProduct, setShowAddProduct] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [categories, setCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,12 +37,12 @@ const Shop = () => {
   }, []);
 
   const handleAddProductClick = () => {
-    setShowAddProduct(true); 
+    setShowAddProduct(true);
   };
 
   const handleProductAdded = (newProduct) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]); 
-    setShowAddProduct(false); 
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+    setShowAddProduct(false);
   };
 
   const handleEditClick = (productId) => {
@@ -67,30 +69,30 @@ const Shop = () => {
     }
   };
 
-    const handleAddToCart = async (productId) => {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        alert('Por favor, inicia sesión para agregar productos al carrito.');
-        return;
+  const handleAddToCart = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Por favor, inicia sesión para agregar productos al carrito.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/cart/${userId}/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId }),
+      });
+
+      if (response.ok) {
+        alert('Producto añadido al carrito con éxito');
+      } else {
+        throw new Error('Error al añadir el producto al carrito');
       }
-    
-      try {
-        const response = await fetch(`http://localhost:3000/api/cart/${userId}/add`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ productId }), // Aquí se pasa el productId al backend
-        });
-    
-        if (response.ok) {
-          alert('Producto añadido al carrito con éxito');
-        } else {
-          throw new Error('Error al añadir el producto al carrito');
-        }
-      } catch (error) {
-        console.error('Error al añadir el producto al carrito:', error);
-        alert('Error al añadir el producto al carrito');
-      }
-    };
+    } catch (error) {
+      console.error('Error al añadir el producto al carrito:', error);
+      alert('Error al añadir el producto al carrito');
+    }
+  };
 
   const handleViewCart = () => {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
@@ -108,6 +110,22 @@ const Shop = () => {
   const filteredProducts = selectedCategory === 'Todas' 
     ? products 
     : products.filter((product) => product.category === selectedCategory);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const handleNextPage = () => {
+    if (indexOfLastProduct < filteredProducts.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="shop-page">
@@ -140,7 +158,7 @@ const Shop = () => {
       </div>
 
       <div className="product-grid">
-        {filteredProducts.map((product) => (
+        {currentProducts.map((product) => (
           <div key={product._id} className="product-card">
             <h3>{product.name}</h3>
             <p>{product.description}</p>
@@ -168,6 +186,10 @@ const Shop = () => {
             )}
           </div>
         ))}
+      </div>
+      <div className="pagination">
+        {currentPage > 1 && <button onClick={handlePrevPage}>Anterior</button>}
+        {indexOfLastProduct < filteredProducts.length && <button onClick={handleNextPage}>Siguiente</button>}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import Shop from './pages/shop';
 import Contact from './pages/Contact';
 import About from './pages/about';
 import Cart from './components/cart';
+import EditProductPage from './pages/EditProductPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/edit-product/:id" element={<EditProductPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>

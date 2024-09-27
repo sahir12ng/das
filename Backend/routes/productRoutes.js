@@ -3,10 +3,9 @@ const multer = require('multer');
 const router = express.Router();
 const Product = require('../models/Product');
 
-// Configuración de multer para subir archivos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Carpeta donde se guardarán las imágenes
+    cb(null, 'uploads/'); 
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
@@ -15,7 +14,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Ruta para agregar un nuevo producto con imagen
 router.post('/', upload.single('image'), async (req, res) => {
   const { name, description, price, category } = req.body;
   const image = req.file ? req.file.path : '';
@@ -30,7 +28,6 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-// Ruta para obtener todos los productos
 router.get('/', async (req, res) => {
   try {
     const products = await Product.find();
@@ -40,7 +37,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Ruta para obtener un producto por ID
 router.get('/:id', async (req, res) => {
   console.log(`Solicitud para obtener el producto con ID: ${req.params.id}`);
   try {
@@ -55,12 +51,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Ruta para actualizar un producto por ID
 router.put('/:id', upload.single('image'), async (req, res) => {
   const { name, description, price, category } = req.body;
   const updateData = { name, description, price, category };
 
-  // Si hay una nueva imagen, agregarla al objeto de actualización
   if (req.file) {
     updateData.image = req.file.path;
   }
@@ -77,7 +71,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
-// Ruta para eliminar un producto por ID
 router.delete('/:id', async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
